@@ -1,0 +1,16 @@
+#sample web server access log to test analyzer
+#each line is a request made to a server 
+#analyzer will read this file and extract:
+#- IP address
+#- Request method
+#- Request path
+#- HTTP version
+#- Response status code (200, 404, 500, etc.)
+
+
+192.168.1.5 - - [14/Jul/2026:10:00:01] "GET / HTTP/1.1" 200
+192.168.1.5 - - [14/Jul/2026:10:00:05] "GET /login HTTP/1.1" 404
+10.0.0.8 - - [14/Jul/2026:10:00:12] "POST /api/login HTTP/1.1" 200
+10.0.0.8 - - [14/Jul/2026:10:00:20] "GET /dashboard HTTP/1.1" 500
+172.16.0.2 - - [14/Jul/2026:10:00:25] "GET / HTTP/1.1" 200
+192.168.1.5 - - [14/Jul/2026:10:00:30] "GET /dashboard HTTP/1.1" 200
