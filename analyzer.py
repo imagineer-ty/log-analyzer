@@ -8,9 +8,19 @@ def read_log_file(filename):
 
         #read every line in the file
         for line in file:
-            print(line.strip())  # print each line without extra whitespace
+            
+            #remove whitespace and newline characters
+            line = line.strip()
 
+            # skip comment lines and empty lines
+            if line.startswith("#") or not line:
+                continue
+            
+            #print the log entry
+            print(f"Log Entry: {line}")
 
+            #print the log entry
+            print(line)
 
 def main():
     #file to analyze
