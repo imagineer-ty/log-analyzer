@@ -6,6 +6,10 @@ def read_log_file(filename):
     # open log file in read mode
     with open(filename, "r") as file:
 
+
+        #dictionary to store ip addresses and their counts
+        ip_counts = {}
+
         #read every line in the file
         for line in file:
             
@@ -17,10 +21,26 @@ def read_log_file(filename):
                 continue
             
             #print the log entry
-            print(f"Log Entry: {line}")
+            #print(f"Log Entry: {line}")
 
-            #print the log entry
-            print(line)
+            #split log entry into parts
+            parts = line.split()
+
+            #first item is the IP address
+            ip_address = parts[0]
+
+            #if ip is already seen increase count
+            if ip_address in ip_counts:
+                ip_counts[ip_address] += 1
+            else:
+                ip_counts[ip_address] = 1
+
+        print("\nTop IP Addresses by Request Count:")
+        print("-----------------------------------")
+
+        for ip, count in ip_counts.items():
+            print(f"{ip}: {count}")
+
 
 def main():
     #file to analyze
