@@ -10,6 +10,9 @@ def read_log_file(filename):
         #dictionary to store ip addresses and their counts
         ip_counts = {}
 
+        #dictionary to stor status codes and their counts
+        status_counts = {}
+
         #read every line in the file
         for line in file:
             
@@ -26,8 +29,11 @@ def read_log_file(filename):
             #split log entry into parts
             parts = line.split()
 
-            #first item is the IP address
+            #extract ip address (first item in the line)
             ip_address = parts[0]
+
+            #extract the status code (last item in the line)
+            status_code = parts[-1]
 
             #if ip is already seen increase count
             if ip_address in ip_counts:
@@ -35,11 +41,24 @@ def read_log_file(filename):
             else:
                 ip_counts[ip_address] = 1
 
+            #if status code is already seen increase count
+            if status_code in status_counts:
+                status_counts[status_code] += 1
+            else:
+                status_counts[status_code] = 1  
+
         print("\nTop IP Addresses by Request Count:")
         print("-----------------------------------")
 
         for ip, count in ip_counts.items():
             print(f"{ip}: {count}")
+
+        print("\nHTTP Status Codes Count:")
+        print("---------------------------")
+        #print status codes
+        for status, count in status_counts.items():
+            print(f"{status}: {count}")
+        
 
 
 def main():
