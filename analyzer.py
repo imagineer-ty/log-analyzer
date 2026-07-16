@@ -10,6 +10,15 @@ def update_count(dictionary, key):
     else:
         dictionary[key] = 1
 
+def print_report(title, data):
+    """
+    print a sorted report for a dictionary
+    """
+    print(f"\n{title}")
+    print("-" * len(title))
+
+    for key, count in sorted(data.items(), key=lambda item: item[1], reverse=True):
+        print(f"{key}: {count}")
 
 def read_log_file(filename):
     # open log file in read mode
@@ -62,30 +71,11 @@ def read_log_file(filename):
             update_count(url_counts, url)
             update_count(method_counts, method)
 
-        print("\nTop IP Addresses:")
-        print("-----------------------------------")
-
-        for ip, count in ip_counts.items():
-            print(f"{ip}: {count}")
-
-        print("\nHTTP Status Codes Count:")
-        print("---------------------------")
-        #print status codes
-        for status, count in status_counts.items():
-            print(f"{status}: {count}")
-
-        print("\nTop Requested URLs:")
-        print("---------------------")
-        #print urls
-        for url, count in url_counts.items():
-            print(f"{url}: {count}")   
-
-        print("\n HTTP Request Methods:")
-        print("---------------------")
-        #print request methods
-        for method, count in method_counts.items():
-            print(f"{method}: {count}")
-
+        #print the reports
+            print_report("Top IP Addresses", ip_counts)
+            print_report("HTTP Status Codes", status_counts)
+            print_report("Top Requested URLs", url_counts)
+            print_report("HTTP Request Methods", method_counts)
 
 def main():
     #file to analyze
