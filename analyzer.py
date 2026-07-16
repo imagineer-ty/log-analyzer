@@ -2,8 +2,6 @@
 # This script reads a log file and extracts useful information such as
 # IP address, request method, request path, HTTP version, and response status code.
 
-import sys
-
 
 def update_count(dictionary, key):
     """
@@ -52,16 +50,10 @@ def read_log_file(filename):
             # Split log entry into parts
             parts = line.split()
 
-            # Extract IP address (first item)
+            # Extract information from log entry
             ip_address = parts[0]
-
-            # Extract status code (last item)
             status_code = parts[-1]
-
-            # Extract requested URL
             url = parts[5]
-
-            # Extract HTTP request method and remove quotes
             method = parts[4].replace('"', "")
 
             # Update counters
@@ -70,11 +62,14 @@ def read_log_file(filename):
             update_count(url_counts, url)
             update_count(method_counts, method)
 
-        # Print reports after analyzing the entire file
-        print_report("Top IP Addresses", ip_counts, sys.stdout)
-        print_report("HTTP Status Codes", status_counts, sys.stdout)
-        print_report("Top Requested URLs", url_counts, sys.stdout)
-        print_report("HTTP Request Methods", method_counts, sys.stdout)
+ 
+    # Create report file after analyzing the log
+    with open("report.txt", "w") as report_file:
+
+        print_report("Top IP Addresses", ip_counts, report_file)
+        print_report("HTTP Status Codes", status_counts, report_file)
+        print_report("Top Requested URLs", url_counts, report_file)
+        print_report("HTTP Request Methods", method_counts, report_file)
 
 
 def main():
