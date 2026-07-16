@@ -1,0 +1,24 @@
+
+Top IP Addresses
+----------------
+192.168.1.5: 3
+10.0.0.8: 2
+172.16.0.2: 1
+
+HTTP Status Codes
+-----------------
+200: 4
+404: 1
+500: 1
+
+Top Requested URLs
+------------------
+/: 2
+/dashboard: 2
+/login: 1
+/api/login: 1
+
+HTTP Request Methods
+--------------------
+GET: 5
+POST: 1
