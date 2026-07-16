@@ -1,90 +1,90 @@
-#log analyzer
-#this script reads a log file and extracts useful info such as IP address, request method, request path, HTTP version, and response status code.
+# Log analyzer
+# This script reads a log file and extracts useful information such as
+# IP address, request method, request path, HTTP version, and response status code.
+
+import sys
+
 
 def update_count(dictionary, key):
     """
-    Update the count of a key in the dictionary. If key exists, increment its count by 1. If key does not exist, initialize its count to 1.
+    Update the count of a key in the dictionary.
+    If the key exists, increment its count by 1.
+    If the key does not exist, initialize its count to 1.
     """
     if key in dictionary:
         dictionary[key] += 1
     else:
         dictionary[key] = 1
 
-def print_report(title, data):
+
+def print_report(title, data, output):
     """
-    print a sorted report for a dictionary
+    Print a sorted report for a dictionary.
+    Results are sorted from highest count to lowest count.
     """
-    print(f"\n{title}")
-    print("-" * len(title))
+    print(f"\n{title}", file=output)
+    print("-" * len(title), file=output)
 
     for key, count in sorted(data.items(), key=lambda item: item[1], reverse=True):
-        print(f"{key}: {count}")
+        print(f"{key}: {count}", file=output)
+
 
 def read_log_file(filename):
-    # open log file in read mode
+    # Open log file in read mode
     with open(filename, "r") as file:
 
-
-        #dictionary to store ip addresses and their counts
+        # Dictionaries to store counts
         ip_counts = {}
-
-        #dictionary to store status codes and their counts
         status_counts = {}
-
-        #dictionary to store urls and their counts
         url_counts = {}
-
-        #dictionary to store request methods and their counts
         method_counts = {}
 
-        #read every line in the file
+        # Read every line in the file
         for line in file:
-            
-            #remove whitespace and newline characters
+
+            # Remove whitespace and newline characters
             line = line.strip()
 
-            # skip comment lines and empty lines
+            # Skip comment lines and empty lines
             if line.startswith("#") or not line:
                 continue
-            
-            #print the log entry
-            #print(f"Log Entry: {line}")
 
-            #split log entry into parts
+            # Split log entry into parts
             parts = line.split()
 
-            #extract ip address (first item in the line)
+            # Extract IP address (first item)
             ip_address = parts[0]
 
-            #extract the status code (last item in the line)
+            # Extract status code (last item)
             status_code = parts[-1]
 
-            #extract the url
+            # Extract requested URL
             url = parts[5]
 
-            #extract the http request method
-            method = parts[4].replace('"', '')  #remove quotes from method
+            # Extract HTTP request method and remove quotes
+            method = parts[4].replace('"', "")
 
-            #update counts using the update_count function
+            # Update counters
             update_count(ip_counts, ip_address)
             update_count(status_counts, status_code)
             update_count(url_counts, url)
             update_count(method_counts, method)
 
-        #print the reports
-            print_report("Top IP Addresses", ip_counts)
-            print_report("HTTP Status Codes", status_counts)
-            print_report("Top Requested URLs", url_counts)
-            print_report("HTTP Request Methods", method_counts)
+        # Print reports after analyzing the entire file
+        print_report("Top IP Addresses", ip_counts, sys.stdout)
+        print_report("HTTP Status Codes", status_counts, sys.stdout)
+        print_report("Top Requested URLs", url_counts, sys.stdout)
+        print_report("HTTP Request Methods", method_counts, sys.stdout)
+
 
 def main():
-    #file to analyze
+    # File to analyze
     log_file = "sample.log"
 
-    #read the log file
+    # Read the log file
     read_log_file(log_file)
 
 
-#run program
+# Run program
 if __name__ == "__main__":
-    main()           
+    main()
